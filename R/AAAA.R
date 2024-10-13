@@ -49,7 +49,7 @@
 
 #' @importFrom utils packageVersion
 .onAttach <- function(libname, pkgname) {
-  sgv <- sg_version()
+  sgv <- try(sg_version(), silent = TRUE)
   if (inherits(sgv, 'try-error'))
     sgv <- "<Not Found>"
   packageStartupMessage(

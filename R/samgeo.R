@@ -4,7 +4,8 @@
 #' @export
 #' @importFrom reticulate py_eval
 sg_version <- function() {
-  try(reticulate::py_eval("version('segment-geospatial')"), silent = TRUE)
+  sg <- samgeo()
+  return(sg[["__version__"]])
 }
 
 #' `Module(samgeo)` - Create `samgeo` Model Instance
@@ -13,7 +14,7 @@ sg_version <- function() {
 #' @export
 #'
 samgeo <- function() {
-  sg
+  reticulate::import("samgeo")
 }
 
 #' @param ... Arguments to create model instance
@@ -42,7 +43,7 @@ sg_generate <- function(x, ...) {
 #'
 #' @export
 sg_torch <- function() {
-  sg$torch
+  reticulate::import("torch")
 }
 
 #'
@@ -51,5 +52,17 @@ sg_torch <- function() {
 #' @rdname sg_torch
 #' @export
 sg_torch_cuda_is_available <- function() {
-  sg_torch()$cuda$is_available()
+  sg <- sg_torch()
+  cuda_available <- sg$torch$cuda$is_available()
+  return(cuda_available)
+}
+
+#'
+#' @return `sg_clear_cuda_cache()` Clears the CUDA cache.
+#'
+#' @rdname sg_torch
+#' @export
+sg_clear_cuda_cache <- function() {
+  sg <- sg_torch()
+  sg$torch$cuda$empty_cache()
 }
