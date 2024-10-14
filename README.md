@@ -49,7 +49,7 @@ if (!"myRSamGeo" %in% installed_packages$name) {
 # Check if the RETICULATE_PYTHON environment variable is set
 if (Sys.getenv("RETICULATE_PYTHON") == "") {
   # If not set, set the RETICULATE_PYTHON environment variable
-  Sys.setenv(RETICULATE_PYTHON = "C:/Users/ajsm/.conda/envs/myRSamGeo/python.exe")
+  Sys.setenv(RETICULATE_PYTHON = "C:/ProgramData/anaconda3/python.exe")
   print("RETICULATE_PYTHON environment variable has been set.")
 } else {
   print(paste("RETICULATE_PYTHON is already set to:", Sys.getenv("RETICULATE_PYTHON")))
