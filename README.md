@@ -106,6 +106,7 @@ Create an instance of your desired model with `sg_samgeo()`
 ``` r
 checkpoint <- file.path(out_dir, 'sam_vit_h_4b8939.pth')
 
+# https://samgeo.gishub.org/samgeo/#samgeo.samgeo
 sam <- sg_samgeo(
   model_type = 'vit_h',
   checkpoint = checkpoint,
@@ -133,6 +134,7 @@ image to vectors and write them out as a layer in a shapefile for
 subsequent use.
 
 ``` r
+# https://samgeo.gishub.org/samgeo/#samgeo.samgeo.SamGeo.tiff_to_shp
 sam$tiff_to_shp(tiff_path = file.path(out_dir, 'segment.tif'),
                 output = file.path(out_dir, 'segment.gpkg'),
                 simplify_tolerance=NULL)
