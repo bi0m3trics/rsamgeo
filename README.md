@@ -79,6 +79,8 @@ After installing the package and the ‘Python’ dependencies, we can
 setup an output directors and download some sample data using `tms_to_geotiff()`
 
 ``` r
+library(reticulate)
+use_condaenv("myRSamGeo", required = TRUE)
 library(rsamgeo)
 
 out_dir <- path.expand(file.path('~', 'Downloads'))
