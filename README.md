@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# {rsamgeo}
+# rsamgeo
 
 The goal of {rsamgeo} is to provide a basic R wrapper around the
 [`segment-geospatial`](https://github.com/opengeos/segment-geospatial)
