@@ -122,9 +122,10 @@ Notebook]((https://colab.research.google.com/drive/1DwHUc1Vpgg1dRTSKB7AY5puDM_2u
 example remember to set the notebook runtime to ‘GPU’.
 
 ``` r
+# https://samgeo.gishub.org/samgeo/#samgeo.samgeo.SamGeo.generate
 sg_generate(sam, source = file.path(out_dir, 'satellite.tif'), 
             output = file.path(out_dir, 'segment.tif'),
-            batch = TRUE)
+            batch = TRUE, batch_sample_size = c(300L, 300L))
 ```
 
 Now that we have processed the input data, we can convert the segmented
