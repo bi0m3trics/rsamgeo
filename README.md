@@ -129,13 +129,13 @@ sg_generate(sam, source = file.path(out_dir, 'satellite.tif'),
 ```
 
 Now that we have processed the input data, we can convert the segmented
-image to vectors and write them out as a layer in a GeoPackage for
+image to vectors and write them out as a layer in a shapefile for
 subsequent use.
 
 ``` r
-sam$tiff_to_gpkg(file.path(out_dir, 'segment.tif'),
-                 file.path(out_dir, 'segment.gpkg'),
-                 simplify_tolerance=NULL)
+sam$tiff_to_shp(tiff_path = file.path(out_dir, 'segment.tif'),
+                output = file.path(out_dir, 'segment.gpkg'),
+                simplify_tolerance=NULL)
 ```
 
 It is then fairly easy to overlay our segment polygons on the original
@@ -144,7 +144,7 @@ satellite image with {terra}:
 ``` r
 library(terra)
 r <- rast(file.path(out_dir, 'satellite.tif'))
-v <- vect(file.path(out_dir, 'segment.gpkg'))
+v <- vect(file.path(out_dir, 'segment.shp'))
 v$ID <- seq_len(nrow(v))
 plotRGB(r)
 plot(v, col = v$ID, alpha = 0.25, add = TRUE)
@@ -152,7 +152,3 @@ plot(v, col = v$ID, alpha = 0.25, add = TRUE)
 ![image](https://github.com/user-attachments/assets/41708471-588a-4e4a-801f-52c34ea148c8)
 
 
-Lastly, we can write the vector out to an ESRI shapefile using writeVector 
-``` r
-terra::writeVector(v, file.path(out_dir, 'sam_vect.shp'), filetype = "ESRI Shapefile", overwrite=TRUE)
-```
