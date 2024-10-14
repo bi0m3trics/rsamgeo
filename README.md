@@ -136,7 +136,7 @@ subsequent use.
 ``` r
 # https://samgeo.gishub.org/samgeo/#samgeo.samgeo.SamGeo.tiff_to_shp
 sam$tiff_to_shp(tiff_path = file.path(out_dir, 'segment.tif'),
-                output = file.path(out_dir, 'segment.gpkg'),
+                output = file.path(out_dir, 'segment.shp'),
                 simplify_tolerance=NULL)
 ```
 
