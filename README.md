@@ -39,7 +39,8 @@ if (!"myRSamGeo" %in% installed_packages$name) {
   conda_create("myRSamGeo")
   # Install necessary Python packages in the new environment
   conda_install("myRSamGeo", c("samgeo", "segment-geospatial", "pytorch",
-                               "torchvision", "torchaudio", "pytorch-cuda=11.8"),
+                               "torchvision", "torchaudio", "pytorch-cuda=11.8",
+                               "gdal"),
                 channel = c("pytorch", "nvidia"))
 } else {
   message("myRSamGeo environment already exists, so activating it...")
