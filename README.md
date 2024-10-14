@@ -70,7 +70,7 @@ library(terra)
 
 # Install the rsamgeo package from GitHub
 remotes::install_github("bi0m3trics/rsamgeo")
-rsamgeo::sg_install()
+rsamgeo::sg_install(conda = "C:/ProgramData/anaconda3/_conda.exe", system=TRUE)
 ```
 
 ## Example
@@ -80,14 +80,17 @@ setup an output directors and download some sample data using `tms_to_geotiff()`
 
 ``` r
 library(reticulate)
-use_condaenv("myRSamGeo", required = TRUE)
+use_condaenv("myRSamGeo", conda = "C:/ProgramData/anaconda3/_conda.exe", required = TRUE)
 library(rsamgeo)
 
-out_dir <- path.expand(file.path('~', 'Downloads'))
+out_dir <- paste0(path.expand(file.path('~')), '/Downloads')
+if (!dir.exists(out_dir)) {
+  dir.create(out_dir)
+}
 
 sg <- samgeo()
 sg$tms_to_geotiff(
-  output = paste0(out_dir, "satellite.tif"),
+  output = file.path(out_dir, "satellite.tif"),
   bbox = c(-111.62367, 35.22365, -111.62103, 35.22615),
   zoom = 20L,                                                   # https://wiki.openstreetmap.org/wiki/Zoom_levels
   source = 'Satellite',
@@ -103,15 +106,11 @@ Create an instance of your desired model with `sg_samgeo()`
 ``` r
 checkpoint <- file.path(out_dir, 'sam_vit_h_4b8939.pth')
 
-sam <- sg_samgeo(                                               # https://samgeo.gishub.org/samgeo/?h=batch#samgeo.samgeo.SamGeo.generate
+sam <- sg_samgeo(
   model_type = 'vit_h',
   checkpoint = checkpoint,
-  # foreground=TRUE,
-  batch=TRUE,
-  # batch_sample_size=c(512L, 512L),
   erosion_kernel = c(3L, 3L),
   mask_multiplier = 255L,
-  # unique=TRUE,
   sam_kwargs = NULL
 )
 ```
@@ -123,8 +122,9 @@ Notebook]((https://colab.research.google.com/drive/1DwHUc1Vpgg1dRTSKB7AY5puDM_2u
 example remember to set the notebook runtime to ‘GPU’.
 
 ``` r
-sg_generate(sam, source = paste0(out_dir, 'satellite.tif'), 
-                 output = paste0(out_dir, 'segment.tif'))
+sg_generate(sam, source = file.path(out_dir, 'satellite.tif'), 
+            output = file.path(out_dir, 'segment.tif'),
+            batch = TRUE)
 ```
 
 Now that we have processed the input data, we can convert the segmented
@@ -132,8 +132,8 @@ image to vectors and write them out as a layer in a GeoPackage for
 subsequent use.
 
 ``` r
-sam$tiff_to_gpkg(paste0(out_dir, 'segment.tif'),
-                 paste0(out_dir, 'segment.gpkg'),
+sam$tiff_to_gpkg(file.path(out_dir, 'segment.tif'),
+                 file.path(out_dir, 'segment.gpkg'),
                  simplify_tolerance=NULL)
 ```
 
@@ -142,8 +142,8 @@ satellite image with {terra}:
 
 ``` r
 library(terra)
-r <- rast(paste0(out_dir, 'satellite.tif'))
-v <- vect(paste0(out_dir, 'segment.gpkg'))
+r <- rast(file.path(out_dir, 'satellite.tif'))
+v <- vect(file.path(out_dir, 'segment.gpkg'))
 v$ID <- seq_len(nrow(v))
 plotRGB(r)
 plot(v, col = v$ID, alpha = 0.25, add = TRUE)
@@ -153,5 +153,5 @@ plot(v, col = v$ID, alpha = 0.25, add = TRUE)
 
 Lastly, we can write the vector out to an ESRI shapefile using writeVector 
 ``` r
-terra::writeVector(v, paste0(out_dir, 'sam_vect.shp'), filetype = "ESRI Shapefile", overwrite=TRUE)
+terra::writeVector(v, file.path(out_dir, 'sam_vect.shp'), filetype = "ESRI Shapefile", overwrite=TRUE)
 ```
