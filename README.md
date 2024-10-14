@@ -11,7 +11,8 @@ the [Meta ‘Segment Anything Model’
 (SAM)](https://github.com/facebookresearch/segment-anything). The
 ‘segment-geospatial’ package draws its inspiration from
 ‘segment-anything-eo’ repository authored by [Aliaksandr
-Hancharenka](https://github.com/aliaksandr960).
+Hancharenka](https://github.com/aliaksandr960) and the package [rsamgeo](https://github.com/brownag/rsamgeo)
+by brownbag ([Andrew Gene Brown](https://github.com/brownag)).
 
 ## Setup
 This initial R script uses the reticulate package to ensure that a specific
