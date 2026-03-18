@@ -52,8 +52,8 @@ sg_torch <- function() {
 #' @rdname sg_torch
 #' @export
 sg_torch_cuda_is_available <- function() {
-  sg <- sg_torch()
-  cuda_available <- sg$torch$cuda$is_available()
+  torch <- sg_torch()
+  cuda_available <- torch$cuda$is_available()
   return(cuda_available)
 }
 
@@ -63,6 +63,6 @@ sg_torch_cuda_is_available <- function() {
 #' @rdname sg_torch
 #' @export
 sg_clear_cuda_cache <- function() {
-  sg <- sg_torch()
-  sg$torch$cuda$empty_cache()
+  torch <- sg_torch()
+  torch$cuda$empty_cache()
 }
