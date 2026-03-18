@@ -164,10 +164,7 @@ v$ID <- seq_len(nrow(v))
 plotRGB(r)
 plot(v, col = v$ID, alpha = 0.25, add = TRUE)
 ```
-
 <figure>
-<img
-src="https://github.com/user-attachments/assets/41708471-588a-4e4a-801f-52c34ea148c8"
-alt="image" />
+<img width="1192" height="775" alt="image" src="https://github.com/user-attachments/assets/f28d11a2-e3c0-4606-99b1-20f072d45330" />
 <figcaption aria-hidden="true">image</figcaption>
 </figure>
